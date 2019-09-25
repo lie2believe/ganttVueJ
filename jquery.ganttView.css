@@ -1,0 +1,441 @@
+/*
+jQuery.ganttView v.0.8.0
+Copyright (c) 2010 JC Grubbs - jc.grubbs@devmynd.com
+MIT License Applies
+*/
+
+div.ganttview-hzheader-month,
+div.ganttview-hzheader-day,
+div.ganttview-vtheader,
+div.ganttview-vtheader-item-name,
+div.ganttview-vtheader-series,
+div.ganttview-grid,
+div.ganttview-grid-row-cell {
+  float: left;
+}
+
+div.ganttview-hzheader-month,
+div.ganttview-hzheader-day {
+  text-align: center;
+}
+
+div.ganttview-grid-row-cell.last,
+div.ganttview-hzheader-day.last,
+div.ganttview-hzheader-month.last {
+  border-right: none;
+}
+
+div.ganttview {
+  border: 1px solid #999;
+}
+
+div.ganttChart{
+}
+
+div.ganttview-main{
+  border:0px;
+  padding:0px;
+  width:100%;
+}
+
+div.ganttview-navigate  {
+  border-top: 1px solid #DDD;
+  padding: 10px 10px 10px 10px;
+  clear: right;
+  position: relative;
+  text-align: center;
+}
+
+
+.nav-button {
+  margin: 0 3px 0 0;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  font-size: 0;
+  background: #595959 url(img/icon_sprite.png) !important;
+  border: 1px solid #454546;
+  cursor: pointer;
+  vertical-align: top;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset, 0 1px 1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset, 0 1px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset, 0 1px 1px rgba(0,0,0,0.2);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.ganttview-navigate .nav-zoomOut {
+  background-position: 1px -96px !important;
+
+}
+
+.ganttview-navigate .nav-zoomIn {
+  background-position: 1px -80px !important;
+
+}
+
+.ganttview-navigate .nav-now {
+  background-position: 1px -32px !important;
+
+}
+
+.ganttview-navigate .nav-new {
+  background-position: 1px -224px !important;
+
+}
+
+.ganttview-navigate .nav-delete {
+  background-position: 1px -208px !important;
+
+}
+
+.ganttview-navigate .nav-merge {
+  background-position: 1px -192px !important;
+
+}
+
+.ganttview-navigate .nav-split {
+  background-position: 1px -176px !important;
+}
+
+.ganttview-navigate .nav-multi {
+  -webkit-apearance : none;   //去掉复选框的默认背景样式
+}
+
+.ganttview-navigate  .nav-prev {
+  background-position: 1px -128px !important;
+}
+
+.ganttview-navigate  .nav-next {
+  background-position: 1px -160px !important;
+}
+
+.ganttview-navigate .nav-select{
+  width:100px;
+
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+.ganttview-navigate  .selected{
+  background-position: 1px -240px !important;
+}
+.ganttview-navigate  .unselected{
+  background-position: 1px -256px !important;
+}
+
+div.ganttview-hint  {
+  border-left: 5px solid #717171;
+
+  width: 200px;
+  height: 100%;
+  background-color: #eeeeee;
+  position: relative;
+  float: right;
+}
+
+div.ganttview-hint-content  {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  overflow-x: hidden;
+  padding: 10px ;
+
+}
+
+/* Horizontal Header */
+
+div.ganttview-hzheader-month {
+  width: 60px;
+  height: 20px;
+  border-right: 1px solid #d0d0d0;
+  line-height: 20px;
+}
+
+div.ganttview-hzheader-day {
+  width: 20px;
+  height: 20px;
+  border-right: 1px solid #f0f0f0;
+  border-top: 1px solid #d0d0d0;
+  line-height: 20px;
+  color: #777;
+}
+
+
+/* Vertical Header */
+
+div.ganttview-vtheader {
+  /*margin-top: 41px;*/
+  width: 240px;
+  overflow: hidden;
+  background-color: #fff;
+  height: 100%;
+  border-right: 5px solid #717171;
+}
+
+.ganttview-vtheader-content{
+  width:100%;
+  height:100%;
+}
+.ganttview-vtheader-item {
+  overflow: hidden;
+  color: #666;
+
+}
+
+div.ganttview-vtheader-item-name {
+  width: 100px;
+  padding-left: 5px;
+  border-top: 1px solid #d0d0d0;
+  line-height: 16px;
+}
+
+div.ganttview-vtheader-series-name {
+  width: 130px;
+  height: 31px;
+  border-top: 1px solid #d0d0d0;
+  line-height: 16px;
+  padding-left: 5px;
+}
+th.ganttview-vtheader-title{
+  height: 41px;
+  align:center;
+  vertical-align: middle;
+}
+td.ganttview-vtheader-title-name {
+  width: 130px;
+  height: 31px;
+  border-top: 1px solid #d0d0d0;
+  line-height: 16px;
+  padding-left: 5px;
+  align:center;
+  vertical-align: middle;
+}
+
+tr.ganttview-vtheader-series{
+
+}
+td.ganttview-vtheader-series-name {
+  width: 130px;
+  height: 31px;
+  border-top: 1px solid #d0d0d0;
+  line-height: 16px;
+  padding-left: 5px;
+}
+/* Slider */
+
+div.ganttview-slide{
+  width:100%;
+}
+div.ganttview-slide-container {
+  overflow: auto;
+  height:100%;
+  border-left: 1px solid #999;
+}
+
+
+/* Grid */
+
+div.ganttview-grid-row-cell {
+  width: 20px;
+  height: 31px;
+  border-right: 1px solid #f0f0f0;
+  border-top: 1px solid #f0f0f0;
+}
+
+div.ganttview-grid-row-cell.ganttview-weekend {
+  background-color: #fafafa;
+}
+
+.arrowUp {
+  font-size: 0;
+  line-height: 0;
+  border-width: 3px;
+  border-color: black;
+  border-top-width: 0;
+  border-style: dashed;
+  border-bottom-style: solid;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+/* 向右的箭头 */
+
+.arrowRight {
+  font-size: 0;
+  line-height: 0;
+  border-width: 3px;
+  border-color: black;
+  border-right-width: 0;
+  border-style: dashed;
+  border-left-style: solid;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+/* 向下的箭头 */
+
+.arrowDown {
+  font-size: 0;
+  line-height: 0;
+  border-width: 3px;
+  border-color: black;
+  border-bottom-width: 0;
+  border-style: dashed;
+  border-top-style: solid;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+/* 向左的箭头 */
+
+.arrowLeft {
+  font-size: 0;
+  line-height: 0;
+  border-width: 3px;
+  border-color: black;
+  border-left-width: 0;
+  border-style: dashed;
+  border-right-style: solid;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+div.arrow{
+  position: relative;
+  width:3px;
+  height:5px;
+}
+div.arrow-hints{
+  border: 1px solid #4e58ed;
+  background-color: #f5f2ff;
+  padding: 1px;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  font-size: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+
+}
+
+/* Blocks */
+
+div.ganttview-blocks {
+  position:relative;
+background-color: transparent;
+}
+
+div.ganttview-block-container {
+  height: 28px;
+  padding-top: 4px;
+}
+
+div.ganttview-block-active{
+
+  background-color: #567bc6;
+  border: 1px solid #9f1819;
+  opacity: 0.9;
+}
+div.ganttview-block-deactive{
+
+  background-color: #567bc6;
+  border: 0px solid #999999;
+  opacity: 0.78;
+}
+
+div.ganttview-block-freeze{
+  opacity: 0.9;
+  background-color: #868686;
+}
+
+div.ganttview-block {
+  position: absolute;
+  z-index: 10;
+  text-align: center;
+  height: 25px;
+
+  /*border: 0px solid #c0c0c0;*/
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+div.ganttview-block-progress{
+  background-color: #ce9329;
+  position: relative;
+  border: 0px solid #fff;
+  margin-top: 16px;
+;
+  left: 0px;
+  /*left: 1px;*/
+  top: 0px;
+  text-align: right;
+  /*vertical-align: bottom;*/
+  height: 7px;
+
+  color: #0a0a0a;
+  line-height: 7px;
+  border-radius:3px 0px 0px 3px;
+  -moz-border-radius:3px;
+
+}
+
+div.ganttview-block-progress .finished{
+  background-color: #209a20;
+}
+
+div.ganttview-block-text {
+  position: absolute;
+  height: 12px;
+  font-size: 0.8em;
+  color: #bababa;
+  padding: 2px 3px;
+  text-align: left;
+}
+
+div.ganttview-block-hint {
+  border: 2px solid #edc332;
+  background-color: #fff5d4;
+  padding: 10px;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+div.ganttview-block-hint-start{
+  border: 1px solid #4e58ed;
+  background-color: #fff5d4;
+  padding: 1px;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  font-size: 9px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+
+}
+div.ganttview-block-hint-end{
+  border: 1px solid #4e58ed;
+  background-color: #fff5d4;
+  padding: 1px;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  font-size: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+
+}
+
+
+
+/* Adjustments for jQuery UI Styling */
+
+div.ganttview-block div.ui-resizable-handle.ui-resizable-s {
+  bottom: -0;
+}
