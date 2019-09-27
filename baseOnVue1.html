@@ -122,6 +122,7 @@
             <button type="button" id='btnZoomOut' class="nav-button nav-zoomOut" title="缩小">o</button>
             <button type="button" id='btnZoomIn' class="nav-button nav-zoomIn" title="放大">i</button>
             <button type="checkbox" id='btnMulti' class="nav-button nav-multi unselected"  title="单选">c</button>
+            <button type="button" id='btnMagnet' class="nav-button nav-magnet selected"  title="吸附">c</button>
             <button type="button" id='btnPrev' class="nav-button nav-prev "  title="时间向前延展">p</button>
             <button type="button" id='btnNext' class="nav-button nav-next "  title="时间向后延展">n</button>
 
@@ -154,6 +155,9 @@
             if( barid == 'bar_ay3_001'){
                 return false;
             }
+            return true;
+        }
+        ,canMagnetBar(barid1 , barid2){
             return true;
         }
         ,canResize( barid ){
@@ -470,6 +474,38 @@
                 return data;
 
             }
+            ,magnetBars( barid1 , barid2){
+
+                if(!barid1 || !barid2){
+                    return;
+                }
+                let data1 , data2;
+                data1 = this.getDataByBarId(barid1);
+                data2 = this.getDataByBarId(barid2);
+                if(!data1 || !data2 || !data1.id || !data2.id){
+                    return;
+                }
+                if(data1.key !=data2.key){
+                    return;
+                }
+                let r1 = this.getRowOfData(data1);
+                let r2 = this.getRowOfData(data2);
+                if(r1!=r2){
+                    return;
+                }
+
+                if( ! this.props.canMagnetBar(barid1,barid2)){
+                    return;
+                }
+                console.log("magnetBars");
+                let  dd2;
+                let newData = this.cloneData(data2);
+                dd2 = data2.start.diff(data1.end,'h',true);
+                newData.start = data2.start.clone().subtract(dd2,'h');
+                newData.end = data2.end.clone().subtract(dd2,'h');
+                this.changeBarByManual(newData);
+
+            }
             ,deleteBar(barid){
                 if (!this.props.canDeleteBar(barid)){
                     return;
@@ -543,6 +579,13 @@
                 this.insertData(newData2);
                 this.afterSplitBar(newData1 , newData2);
                 return [newData1,newData2];
+            }
+            ,cloneData(data){
+                let txt = JSON.stringify(data);
+                let obj =  JSON.parse(txt);
+                obj.start = moment(obj.start);
+                obj.end = moment(obj.end);
+                return obj;
             }
             ,mergeBar(barid1 , barid2){
                 if(!barid1 || !barid2){
@@ -687,6 +730,7 @@
                     data.end = newData.end;
                 }
 
+
                 if(step != 0){
                     bar.css("width", step+'px');
                 }
@@ -708,7 +752,7 @@
                     }
 
                 }
-                console.log("complete:"+newData.progress);
+
                 let complete = (newData.progress || 0);
                 if (complete>100){
                     complete = 100;
@@ -716,7 +760,7 @@
                 if(complete<0){
                     complete = 0;
                 }
-                console.log("complete:"+complete);
+
                 let progress = jQuery("#"+barid+" .ganttview-block-progress");
                 progress.css("width",complete+'%');
                 progress.text(complete+"%");
@@ -1334,7 +1378,7 @@
                     let self = $(this);
                     let id = self.attr("id");
                     if( typeof gantt.props.onButtonClick == 'function'){
-                        if ( self.attr("type") =='checkbox'){
+                        if ( self.attr("id") =='btnMulti'){
                             let cls = 'unselected';
                             if(self.hasClass("unselected")){
                                 cls="selected";
@@ -1354,6 +1398,14 @@
                             if( gantt.props.selectstatus=="single"){
 
                                 gantt.deactiveAllBars();
+                            }
+
+                        }
+                        if ( self.attr("id") =='btnMagnet'){
+                            let barsid = gantt.getSelectedBarsId();
+
+                            for(let j = 0 ; j < barsid.length ; j++){
+                                gantt.magnetBars( barsid[j],barsid[j+1]);
                             }
 
                         }
@@ -1871,6 +1923,7 @@
                         let hit = false;
                         let hitLeft = false;
 
+
                         //计算左边是否碰撞
                         if (minLeftMargin) {
                             if (left < minLeftMargin) {
@@ -1897,11 +1950,20 @@
                             }
                             self.css("left", fixLeft)
                         }
+
+                        let direct = "left";
+                        let cX = parseInt( self.css("left"));
+                        if(parseInt(startPos.x)<parseInt( cX ) ){
+                            direct = "right";
+                        }
+
                         dragPos.x = self.css("left");
                         dragPos.y = self.css("top");
                         dragPos.h = self.css("height");
                         dragPos.w = self.css("width");
                         dragPos.state = 1;
+
+
 
                         let data = gantt.getDataByBarId(self.attr("id") );
                          gantt.dragBarDate( self.attr("id") , startPos,dragPos);

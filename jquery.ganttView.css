@@ -120,12 +120,30 @@ div.ganttview-navigate  {
   -moz-border-radius: 2px;
   border-radius: 2px;
 }
-.ganttview-navigate  .selected{
+button#btnMulti.selected{
   background-position: 1px -240px !important;
 }
-.ganttview-navigate  .unselected{
+button#btnMulti.unselected{
   background-position: 1px -256px !important;
 }
+
+
+.ganttview-navigate  .nav-magnet{
+
+  -webkit-apearance : none;   //去掉复选框的默认背景样式
+}
+
+
+button#btnMagnet.selected{
+  background-position: 1px -272px !important;
+
+}
+
+button#btnMagnet.unselected{
+  background-position: 1px -288px !important;
+
+}
+
 
 div.ganttview-hint  {
   border-left: 5px solid #717171;
@@ -332,16 +350,18 @@ div.ganttview-block-container {
 }
 
 div.ganttview-block-active{
-
   background-color: #567bc6;
-  border: 1px solid #9f1819;
+  /*border: 1px solid #9f1819;*/
   opacity: 0.9;
+  box-shadow: 0 0 0 2px #9f1819 inset;
+
 }
 div.ganttview-block-deactive{
 
   background-color: #567bc6;
   border: 0px solid #999999;
   opacity: 0.78;
+
 }
 
 div.ganttview-block-freeze{
